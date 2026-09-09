@@ -15,7 +15,7 @@ def csrf_failure(request, reason=''):
 
 
 def permission_denied(request, exception):
-    return render(request, 'pages/403csrf.html', status=403)
+    return render(request, 'pages/403.html', status=403)
 
 
 def page_not_found(request, exception):

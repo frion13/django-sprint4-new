@@ -1,9 +1,8 @@
 from functools import cache
 
 import torch
+from django.conf import settings
 from transformers import AutoModelForSequenceClassification, AutoTokenizer
-
-from core.constants import TOXICITY_THRESHOLD
 
 
 MODEL_NAME = 'cointegrated/rubert-tiny-toxicity'
@@ -21,7 +20,12 @@ def load_moderation_model():
 def get_toxicity_score(text: str) -> float:
     """Вернуть оценку токсичности от 0 до 1."""
     tokenizer, model = load_moderation_model()
-    inputs = tokenizer(text, return_tensors='pt', truncation=True)
+    inputs = tokenizer(
+        text,
+        return_tensors='pt',
+        truncation=True,
+        padding=True,
+    )
     with torch.inference_mode():
         probabilities = torch.sigmoid(model(**inputs).logits)[0]
     non_toxic = probabilities[0].item()
@@ -31,4 +35,4 @@ def get_toxicity_score(text: str) -> float:
 
 def is_toxic(text: str) -> bool:
     """Определить, достигла ли оценка заданного порога."""
-    return get_toxicity_score(text) >= TOXICITY_THRESHOLD
+    return get_toxicity_score(text) >= settings.TOXICITY_THRESHOLD

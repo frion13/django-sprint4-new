@@ -27,6 +27,9 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'testserver']
 
+TOXICITY_THRESHOLD = 0.8
+POSTS_BY_PAGE = 10
+
 
 # Application definition
 

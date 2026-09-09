@@ -54,7 +54,7 @@ class Location(PublishedModel):
     """Место, о котором может быть публикация."""
 
     name = models.CharField(
-        max_length=256,
+        max_length=MAX_TITLE_LENGTH,
         verbose_name='Название места',
     )
 
@@ -105,6 +105,7 @@ class Post(PublishedModel):
         Category,
         on_delete=models.SET_NULL,
         null=True,
+        related_name='posts',
         verbose_name='Категория',
     )
 

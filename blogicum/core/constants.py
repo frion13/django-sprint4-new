@@ -1,1 +1,4 @@
-TOXICITY_THRESHOLD = 0.8
+from django.conf import settings
+
+
+TOXICITY_THRESHOLD = settings.TOXICITY_THRESHOLD
